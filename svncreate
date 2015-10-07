@@ -1,0 +1,121 @@
+#! /bin/bash
+################################################################################
+#FUNCTION:The script is to add the users and their passwd into the passwdfile. #
+#the original passwd of the user is same as the user name.                     #
+#DATE    :2013-08-28                                                           #
+#AUTHOR  :LIQY                                                                 #
+#DESCRIBTION  :This script is for the svn:10.15.3.120/develop/Svn-library      #
+#HISTORY :                                                                     #
+#       DATE                  MODIFY                                   AUTH    #
+#   2013-08-28        Change the PWDFILE source                       -LIQY-   #
+#   2014-08-08        Add the SVN_URL variable                        -LIQY-   #
+#   2015-02-24        Add the SVN_GROUP & HTTP_CONF variable          -LIQY-   #
+################################################################################
+CURDIR=`pwd`
+source ${CURDIR}/config/rule
+
+:<<eof
+MANAGERROOT="/home/svnroot/svnmanager"
+SVNADMIN=/usr/local/subversion/bin/svnadmin 
+HTTPCONF="/usr/local/apache2/conf/httpd.conf"
+VERSIONLOG=$MANAGERROOT"/config/RepoVersion"
+eof
+
+
+
+cat << information
+********************************************************************************
+
+The script is to deal with the svn server.It can add new svn library and modify 
+the httpd.conf automatically.What you shoud do is to make the currect access file
+
+********************************************************************************
+information
+echo 
+SVN_LIBRARY_NAME=$2
+if [ -z "$SVN_LIBRARY_NAME" ];then
+	echo "The parameter is empty,please set the parameter!"
+	exit
+fi
+echo "The purpose library name is:" $SVN_LIBRARY_NAME
+echo
+echo
+
+#PWD=$MANAGEROOT
+ACCESS_SOURCE=$MANAGERROOT/access
+ACCESS=$ACCESS_SOURCE/$SVN_LIBRARY_NAME"_access"
+SVN_GROUP=$1
+SVN_LIBRARY="/home/svnroot/repos/$SVN_GROUP/$SVN_LIBRARY_NAME"
+SVN_URL=`ifconfig |grep addr |grep "inet addr" |head -n 1 |awk -F " " '{print $2}'|cut -f 2 -d":"`
+###############################################################################
+#
+#Create the svn library,but Check whether the library already exists at first #
+#
+###############################################################################
+
+if [ ! -d $SVN_LIBRARY ];then
+	if [ -f $ACCESS ];then
+		$SVNADMIN create $SVN_LIBRARY
+		chmod 777 -R $SVN_LIBRARY
+		cp $ACCESS $SVN_LIBRARY/access
+	else
+		echo "The access file belong to the purpose library not exists"
+		echo "The access file's name should be $SVN_LIBRARY_NAME"_access.""
+		exit
+	fi
+else
+	echo "The library '$SVN_LIBRARY_NAME' already exist!"
+	exit
+fi
+
+###############################################################################
+#call the passwd-deal.sh to deal with the users and their passwd              #
+#
+###############################################################################
+
+#cp $PWD/passwd-deal.sh  /home/svnroot/repos/develop/$SVN_LIBRARY_NAME
+#cd /home/svnroot/repos/develop/$SVN_LIBRARY_NAME/
+#sh /home/svnroot/repos/develop/$SVN_LIBRARY_NAME/passwd-deal.sh
+
+sh $MANAGEROOT/tools/passwd-deal.sh  /home/svnroot/repos/$SVN_GROUP/$SVN_LIBRARY_NAME/access
+
+################################################################################
+#Modify the config file /usr/local/apach2/confi/httpd.conf.Add the config section
+#of the new library.
+#
+################################################################################
+
+##section_exist_flag=`(cat /usr/local/apache2/conf/httpd.conf) | sed -n "/$SVN_LIBRARY_NAME/="`
+##if [ -z "$section_exist_flag" ];then
+#echo "section_exist_flag=" $section_exist_flag
+	
+	echo "#################start####################" >> $HTTPCONF
+	echo "<Location /$SVN_GROUP/$SVN_LIBRARY_NAME>" >> $HTTPCONF
+	echo "DAV svn" >> $HTTPCONF
+	echo "SVNPath \"/home/svnroot/repos/$SVN_GROUP/$SVN_LIBRARY_NAME\"" >> $HTTPCONF
+	echo "AuthType Basic " >> $HTTPCONF
+	echo "AuthName \"Subversion.$SVN_LIBRARY_NAME\"" >> $HTTPCONF
+	echo "AuthUserfile /home/svnroot/repos/allpeo-svn.passwd" >> $HTTPCONF
+	echo "AuthzSVNAccessFile /home/svnroot/repos/$SVN_GROUP/$SVN_LIBRARY_NAME/access" \
+>> $HTTPCONF
+	echo "require valid-user" >> $HTTPCONF
+	echo "</Location> " >> $HTTPCONF
+	echo "#################end####################" >> $HTTPCONF
+	echo 
+	echo "The Svn library $SVN_LIBRARY_NAME created successfully!"
+	echo
+	#service httpd restart 
+	#killall -9 httpd
+	service httpd restart
+	echo "$SVN_LIBRARY_NAME 0" >>$VERSIONLOG
+
+	echo "The new Svn URL is http://$SVN_URL:/$SVN_GROUP/$SVN_LIBRARY_NAME"
+	#######################################################################
+	##Write the md5sum of the httpd.conf to the /tmp/httpd.md5
+	#md5sum $HTTP_CONF |awk '{print $1}'>/tmp/httpd.md5	
+##else
+	#rm -rf /home/svnroot/repos/$SVN_GROUP/$SVN_LIBRARY_NAME
+##	rm -rf $SVN_LIBRARY
+##	echo "error! The Library $SVN_LIBRARY_NAME already exists in the /usr/local/apach2/conf/httpd.conf!"
+##fi
+

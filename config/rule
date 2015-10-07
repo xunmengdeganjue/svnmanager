@@ -1,0 +1,45 @@
+#! /bin/bash
+empty=
+space=$empty" "$empty
+
+SVNROOT="/home/svnroot"
+
+#DUMPROOT="/home/svnroot/dump"
+#REPOROOT="/home/svnroot/repos"
+#MANAGERROOT="/home/svnroot/svnmanager"
+#DUMPDIR="/home/svnroot/dump"
+
+DUMPROOT=$SVNROOT/"dump"
+REPOROOT=$SVNROOT/"repos"
+MANAGERROOT=$SVNROOT/"svnmanager"
+DUMPDIR=$SVNROOT/"dump"
+
+SOURCEPATH1=$REPOROOT/"develop"
+#SOURCEPATH2=$REPOROOT/"manage"
+SOURCEPATH2=""
+#SOURCEPATH3=$REPOROOT/"skysoft"
+SOURCEPATH3=""
+
+SOURCEPATH=${SOURCEPATH1}${space}${SOURCEPATH2}${space}${SOURCEPATH3}
+
+DUMPLOG=${MANAGERROOT}"/log/dump.log"
+LOADLOG=$MANAGERROOT/"log/load.log"
+VERSIONLOG=${MANAGERROOT}"/config/RepoVersion"
+
+HTTPCONF="/usr/local/apache2/conf/httpd.conf"
+MD5NUM="/tmp/httpd.md5"
+
+SVNADMIN="/usr/local/subversion/bin/svnadmin"
+SVNLOOK="/usr/local/subversion/bin/svnlook"
+
+
+#Maybe you just need to change  the remotedumpdir's IP and the remoteroot's password
+REMOTEIP="192.168.1.113"
+REMOTEDUMPDIR=${REMOTEIP}":"$DUMPROOT
+REMOTEROOTPWD="liqiyuan"
+
+
+
+
+
+

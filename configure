@@ -1,0 +1,14 @@
+#! /bin/bash
+
+PWD=`pwd`
+tt=$PWD
+echo "export PATH=$PWD/tools:$PATH">>/etc/profile
+source /etc/profile
+
+[ -d "/home/svnroot/dump" ] || mkdir -p /home/svnroot/dump
+
+sed  "s/$PWD/${PWD}/" ./config/test
+
+
+
+

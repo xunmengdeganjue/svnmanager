@@ -1,0 +1,5 @@
+[groups]
+PEO-RW = zhongyifeng,zengyu,jinyuchuan,xiaoli
+
+[/]
+@PEO-RW = rw

@@ -1,0 +1,135 @@
+[groups]
+OCM = xiaosun,xiaohu,xiaoli
+CM = xiaoli
+PM = tangzhongchuan
+PG = xiaodeng,gaojing,wangjian,huangxiangrui,zhangzhilin,zhangtielin,zhaowei
+QA = xiaoli,tangke,guopeng
+O_READ = 
+[/]
+@OCM = rw
+@CM = rw
+@PM = r
+@PG = r
+@QA = r
+@O_READ = r
+* =
+[/trunk/01.ProjectManagement]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = r
+@QA = r
+[/trunk/01.ProjectManagement/00.ProjectInitiation]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = r
+@QA = r
+[/trunk/01.ProjectManagement/01.ProjectPlan]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = rw
+@QA = r
+[/trunk/01.ProjectManagement/02.ProjectMeasurement]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = r
+@QA = r
+[/trunk/01.ProjectManagement/03.ProjectReport/01.WeeklyReport]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = rw
+@QA = r
+[/trunk/01.ProjectManagement/05.QualityAssurance]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = r
+@QA = rw
+[/trunk/01.ProjectManagement/05.QualityAssurance]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = r
+@QA = rw
+[/trunk/01.ProjectManagement/06.Meeting&Mail]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = r
+@QA = r
+[/trunk/01.ProjectManagement/06.Meeting&Mail/01.Meeting]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = rw
+@QA = rw
+[/trunk/01.ProjectManagement/06.Meeting&Mail/02.Mail]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = rw
+@QA = rw
+[/trunk/01.ProjectManagement/07.Problem&RiskManagement]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = rw
+@QA = rw
+[/trunk/01.ProjectManagement/08.Reviews]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = rw
+@QA = rw
+[/trunk/01.ProjectManagement/09.Reference]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = rw
+@QA = rw
+[/trunk/01.ProjectManagement/99.Others]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = rw
+@QA = rw
+[/trunk/02.ProjectProduction]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = rw
+@QA = rw
+[/trunk/02.ProjectProduction/01.FeasibilityAnalysis]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = rw
+@QA = r
+[/trunk/02.ProjectProduction/02.RequirementAnalysis]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = rw
+@QA = r
+[/trunk/02.ProjectProduction/03.Design]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = rw
+@QA = r
+[/trunk/02.ProjectProduction/04.Test]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = rw
+@QA = r
+[/trunk/02.ProjectProduction/99.Other]
+@OCM = rw
+@CM = rw
+@PM = rw
+@PG = rw
+@QA = r
